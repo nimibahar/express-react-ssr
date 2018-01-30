@@ -1,5 +1,7 @@
+import 'babel-polyfill';
 import express from 'express';
 import renderer from './helpers/renderer.js';
+import createStore from './helpers/createStore.js';
 
 const app = express();
 
@@ -7,7 +9,11 @@ app.use(express.static('public')); //tells express to deal with the public direc
 //the outside world
 
 app.get('*', (req, res) => {
-  res.send(renderer(req));
+  const store = createStore();
+  //some logic to initialise
+  //and load data into the store
+
+  res.send(renderer(req, store));
 });
 
 app.listen(3000, () => {
